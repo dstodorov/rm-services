@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "recipe_products")
-public class RecipeProducts {
+public class RecipeProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
