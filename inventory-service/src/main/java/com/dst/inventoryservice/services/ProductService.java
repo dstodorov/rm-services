@@ -2,6 +2,8 @@ package com.dst.inventoryservice.services;
 
 import com.dst.inventoryservice.models.Product;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
+import com.dst.inventoryservice.models.enums.ProductCategory;
+import com.dst.inventoryservice.models.enums.UnitType;
 import com.dst.inventoryservice.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,8 +26,8 @@ public class ProductService {
 
         Product product = Product.builder()
                 .name(newProduct.name())
-                .unit(newProduct.unit())
-                .category(newProduct.category())
+                .unit(UnitType.valueOf(newProduct.unit()))
+                .category(ProductCategory.valueOf(newProduct.category()))
                 .build();
 
 
@@ -47,8 +49,8 @@ public class ProductService {
     private ProductDTO mapToProductDTO(Product product) {
         return ProductDTO.builder()
                 .name(product.getName())
-                .category(product.getCategory())
-                .unit(product.getUnit())
+                .category(product.getCategory().name())
+                .unit(product.getUnit().name())
                 .build();
     }
 }
