@@ -37,6 +37,10 @@ public class ProductController {
 
         Long productId = this.productService.createProduct(product);
 
+        if (productId == -1) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
         return ResponseEntity.created(uriComponentsBuilder.path("/api/v1/products/{id}").build(productId)).build();
 
     }

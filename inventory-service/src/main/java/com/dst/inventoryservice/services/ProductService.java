@@ -4,12 +4,10 @@ import com.dst.inventoryservice.models.Product;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
 import com.dst.inventoryservice.repositories.ProductRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -18,10 +16,16 @@ public class ProductService {
 
     public Long createProduct(ProductDTO newProduct) {
 
+        Optional<Product> productByName = this.productRepository.findByName(newProduct.name());
+
+        if (productByName.isPresent()) {
+            return -1L;
+        }
+
         Product product = Product.builder()
-                .name(newProduct.getName())
-                .unit(newProduct.getUnit())
-                .category(newProduct.getCategory())
+                .name(newProduct.name())
+                .unit(newProduct.unit())
+                .category(newProduct.category())
                 .build();
 
 
