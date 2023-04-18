@@ -1,22 +1,17 @@
 package com.dst.inventoryservice.controllers;
 
-import com.dst.inventoryservice.exceptions.InvalidProductException;
+import com.dst.inventoryservice.exceptions.DuplicatedProductException;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
 import com.dst.inventoryservice.services.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -51,6 +46,13 @@ public class ProductController {
 
         return ResponseEntity.created(uriComponentsBuilder.path("/api/v1/products/{id}").build(productId)).build();
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductDTO productDTO) {
+        ProductDTO updatedProduct = this.productService.updateProduct(id, productDTO);
+
+        return ResponseEntity.ok(updatedProduct);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

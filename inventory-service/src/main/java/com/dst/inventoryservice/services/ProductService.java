@@ -1,5 +1,7 @@
 package com.dst.inventoryservice.services;
 
+import com.dst.inventoryservice.exceptions.DuplicatedProductException;
+import com.dst.inventoryservice.exceptions.ProductNotFoundException;
 import com.dst.inventoryservice.models.Product;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
 import com.dst.inventoryservice.models.enums.ProductCategory;
@@ -47,10 +49,41 @@ public class ProductService {
     }
 
     private ProductDTO mapToProductDTO(Product product) {
-        return ProductDTO.builder()
+        return ProductDTO
+                .builder()
                 .name(product.getName())
                 .category(product.getCategory().name())
                 .unit(product.getUnit().name())
                 .build();
+    }
+
+    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
+        // Check if product is found, if not throw exception
+        this.productRepository
+                .findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id.toString()));
+
+        // Check if product with this name exists in database
+        if (productRepository.findByName(productDTO.name()).isPresent()) {
+            throw new DuplicatedProductException(id.toString());
+        }
+
+        // Saving changes
+        Product savedProduct = this.productRepository.save(
+                Product
+                        .builder()
+                        .id(id).name(productDTO.name())
+                        .category(ProductCategory.valueOf(productDTO.category()))
+                        .unit(UnitType.valueOf(productDTO.unit()))
+                        .build()
+        );
+
+        return ProductDTO
+                .builder()
+                .name(savedProduct.getName())
+                .category(savedProduct.getCategory().name())
+                .unit(savedProduct.getUnit().name())
+                .build();
+
     }
 }
