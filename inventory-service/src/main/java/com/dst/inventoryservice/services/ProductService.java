@@ -64,7 +64,7 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException(id.toString()));
 
         // Check if product with this name exists in database
-        if (productRepository.findByName(productDTO.name()).isPresent()) {
+        if (productRepository.findByName(productDTO.name()).filter(p -> !p.getId().equals(id)).isPresent()) {
             throw new DuplicatedProductException(id.toString());
         }
 
