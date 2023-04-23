@@ -45,7 +45,6 @@ public class ProductController {
         }
 
         return ResponseEntity.created(uriComponentsBuilder.path("/api/v1/products/{id}").build(productId)).build();
-
     }
 
     @PutMapping("/{id}")
