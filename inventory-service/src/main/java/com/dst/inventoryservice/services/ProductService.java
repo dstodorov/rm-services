@@ -58,7 +58,7 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
-        // Check if product is found, if not throw exception
+        // Check if product is found, if not, throw exception
         this.productRepository
                 .findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id.toString()));
@@ -84,6 +84,5 @@ public class ProductService {
                 .category(savedProduct.getCategory().name())
                 .unit(savedProduct.getUnit().name())
                 .build();
-
     }
 }
