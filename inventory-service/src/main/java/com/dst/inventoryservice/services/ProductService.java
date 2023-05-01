@@ -51,6 +51,7 @@ public class ProductService {
     private ProductDTO mapToProductDTO(Product product) {
         return ProductDTO
                 .builder()
+                .id(product.getId())
                 .name(product.getName())
                 .category(product.getCategory().name())
                 .unit(product.getUnit().name())
