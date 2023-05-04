@@ -1,5 +1,7 @@
 package com.dst.inventoryservice.services;
 
+import com.dst.inventoryservice.exceptions.DuplicatedSupplierException;
+import com.dst.inventoryservice.exceptions.SupplierNotFoundException;
 import com.dst.inventoryservice.models.Product;
 import com.dst.inventoryservice.models.Supplier;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
@@ -35,8 +37,39 @@ public class SupplierService {
         return this.supplierRepository.findById(id).map(this::mapToSupplierDTO);
     }
 
-    public void updateSupplier() {
+    public SupplierDTO updateSupplier(Long id, SupplierDTO supplierDTO) {
+        // Check if supplier exists, if not, throw exception
+        Supplier supplier = this.supplierRepository
+                .findById(id)
+                .orElseThrow(() -> new SupplierNotFoundException(id.toString()));
 
+        Optional<Supplier> supplierByNameAndEmailAndPhoneNumber = this.supplierRepository
+                .findByNameAndEmailAndPhoneNumber(id,
+                        supplierDTO.name(),
+                        supplierDTO.email(),
+                        supplierDTO.phoneNumber());
+
+        // Throw duplication exception if there record with same name/email/phoneNumber
+        if (supplierByNameAndEmailAndPhoneNumber.isPresent()) {
+            throw new DuplicatedSupplierException(id.toString());
+        }
+
+        // Saving changes
+        supplier.setName(supplierDTO.name());
+        supplier.setEmail(supplierDTO.email());
+        supplier.setPhoneNumber(supplierDTO.phoneNumber());
+        supplier.setDescription(supplierDTO.description());
+
+        this.supplierRepository.save(supplier);
+
+        return SupplierDTO
+                .builder()
+                .id(id)
+                .name(supplierDTO.name())
+                .email(supplierDTO.email())
+                .phoneNumber(supplierDTO.phoneNumber())
+                .description(supplierDTO.description())
+                .build();
     }
 
     public void changeStatus() {

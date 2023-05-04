@@ -35,4 +35,11 @@ public class SupplierController {
         return supplier.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SupplierDTO> updateSupplierInfo(@PathVariable Long id, @RequestBody @Valid SupplierDTO supplierDTO) {
+        SupplierDTO supplier = this.supplierService.updateSupplier(id, supplierDTO);
+
+        return ResponseEntity.ok(supplier);
+    }
 }

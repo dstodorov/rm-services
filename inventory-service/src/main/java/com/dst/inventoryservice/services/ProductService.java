@@ -81,6 +81,7 @@ public class ProductService {
 
         return ProductDTO
                 .builder()
+                .id(id)
                 .name(savedProduct.getName())
                 .category(savedProduct.getCategory().name())
                 .unit(savedProduct.getUnit().name())
