@@ -1,5 +1,7 @@
 package com.dst.inventoryservice.controllers;
 
+import com.dst.inventoryservice.exceptions.DuplicatedSupplierException;
+import com.dst.inventoryservice.exceptions.SupplierNotFoundException;
 import com.dst.inventoryservice.models.dtos.SupplierDTO;
 import com.dst.inventoryservice.services.SupplierService;
 import jakarta.validation.Valid;
@@ -41,5 +43,11 @@ public class SupplierController {
         SupplierDTO supplier = this.supplierService.updateSupplier(id, supplierDTO);
 
         return ResponseEntity.ok(supplier);
+    }
+
+    @ExceptionHandler({DuplicatedSupplierException.class})
+    @ResponseStatus(HttpStatus.CONFLICT)
+    private ResponseEntity<String> duplicationExceptionHandler(DuplicatedSupplierException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }
