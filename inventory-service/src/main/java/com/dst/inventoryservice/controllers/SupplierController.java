@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -51,19 +50,22 @@ public class SupplierController {
         return ResponseEntity.ok(supplier);
     }
 
+    @GetMapping
+    public ResponseEntity<List<SupplierDTO>> getAllSuppliers() {
+        return this.supplierService.getAllSuppliers().map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     private ResponseEntity<String> handleValidationExceptions(BindingResult bindingResult) {
 
         List<String> errors = new ArrayList<>();
 
-        bindingResult.getAllErrors().forEach(e -> {
-            errors.add(ErrorMessage
-                    .builder()
-                    .field(((FieldError) e).getField())
-                    .message(e.getDefaultMessage())
-                    .build().toString());
-        });
+        bindingResult.getAllErrors().forEach(e -> errors.add(ErrorMessage
+                .builder()
+                .field(((FieldError) e).getField())
+                .message(e.getDefaultMessage())
+                .build().toString()));
 
         String responseBody = String.format("{\"errors\" : [%s]}", String.join(", ", errors));
 

@@ -10,6 +10,7 @@ import com.dst.inventoryservice.repositories.SupplierRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,6 +71,10 @@ public class SupplierService {
                 .phoneNumber(supplierDTO.phoneNumber())
                 .description(supplierDTO.description())
                 .build();
+    }
+
+    public Optional<List<SupplierDTO>> getAllSuppliers() {
+        return Optional.of(this.supplierRepository.findAll().stream().map(this::mapToSupplierDTO).toList());
     }
 
     public void changeStatus() {
