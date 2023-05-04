@@ -17,6 +17,7 @@ public record SupplierDTO(
         @Email
         @NotNull
         String email,
-        String description
+        String description,
+        Boolean active
 ) {
 }

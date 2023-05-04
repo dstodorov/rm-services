@@ -26,4 +26,7 @@ public class Supplier {
 
     @Column(columnDefinition = "text")
     private String description;
+
+    @Basic
+    private Boolean active = true;
 }

@@ -60,6 +60,7 @@ public class SupplierService {
         supplier.setEmail(supplierDTO.email());
         supplier.setPhoneNumber(supplierDTO.phoneNumber());
         supplier.setDescription(supplierDTO.description());
+        supplier.setActive(supplierDTO.active());
 
         this.supplierRepository.save(supplier);
 
@@ -70,6 +71,7 @@ public class SupplierService {
                 .email(supplierDTO.email())
                 .phoneNumber(supplierDTO.phoneNumber())
                 .description(supplierDTO.description())
+                .active(supplier.getActive())
                 .build();
     }
 
@@ -89,6 +91,7 @@ public class SupplierService {
                 .phoneNumber(supplier.getPhoneNumber())
                 .email(supplier.getEmail())
                 .description(supplier.getDescription())
+                .active(supplier.getActive())
                 .build();
     }
 
@@ -99,6 +102,7 @@ public class SupplierService {
                 .phoneNumber(supplierDTO.phoneNumber())
                 .email(supplierDTO.email())
                 .description(supplierDTO.description())
+                .active(supplierDTO.active())
                 .build();
     }
 
