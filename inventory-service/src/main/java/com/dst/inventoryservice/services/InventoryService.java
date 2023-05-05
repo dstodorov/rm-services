@@ -3,6 +3,7 @@ package com.dst.inventoryservice.services;
 import com.dst.inventoryservice.exceptions.InventoryProductNotFoundException;
 import com.dst.inventoryservice.exceptions.ProductNotFoundException;
 import com.dst.inventoryservice.exceptions.SupplierNotFoundException;
+import com.dst.inventoryservice.models.CheckoutStatus;
 import com.dst.inventoryservice.models.Inventory;
 import com.dst.inventoryservice.models.Product;
 import com.dst.inventoryservice.models.Supplier;
@@ -85,5 +86,14 @@ public class InventoryService {
                 .product(productDTO)
                 .supplier(supplierInfoDTO)
                 .build();
+    }
+
+    public CheckoutStatus productsCheckout(Double recipeId, Integer numberOfDishes) {
+        // Check quantities
+        // Check wasted for products
+        // Reduce quantities
+        // Return CheckoutStatus
+
+        return null;
     }
 }
