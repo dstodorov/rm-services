@@ -18,7 +18,7 @@ public record AddInventoryProductDTO(
         Long supplierId,
         @Positive
         @NotNull
-        Integer orderQuantity,
+        Double orderQuantity,
         @Positive
         @NotNull
         BigDecimal batchPrice,

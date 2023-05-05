@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Builder
 public record InventoryProductInfoDTO(
         Long id,
-        Integer currentQuantity,
+        Double currentQuantity,
         SupplierInfoDTO supplier,
         ProductDTO product,
         BigDecimal batchPrice,

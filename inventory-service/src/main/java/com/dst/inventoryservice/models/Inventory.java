@@ -19,10 +19,10 @@ public class Inventory {
     private long id;
 
     @Column(nullable = false, name = "current_quantity")
-    private Integer currentQuantity;
+    private Double currentQuantity;
 
     @Column(nullable = false, name = "order_quantity")
-    private Integer orderQuantity;
+    private Double orderQuantity;
 
     @Column(nullable = false, name = "batch_price")
     private BigDecimal batchPrice;
