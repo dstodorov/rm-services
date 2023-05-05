@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -17,10 +18,6 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
     @Column(nullable = false, name = "current_quantity")
     private Integer currentQuantity;
 
@@ -29,6 +26,19 @@ public class Inventory {
 
     @Column(nullable = false, name = "batch_price")
     private BigDecimal batchPrice;
+
+    @Column(nullable = false, name = "order_date")
+    private LocalDate orderDate;
+
+    @Column(nullable = false, name = "expiry_date")
+    private LocalDate expiryDate;
+
+    @Basic
+    private Boolean wasted;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
