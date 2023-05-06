@@ -81,6 +81,7 @@ public class RecipeService {
     private RecipeDTO mapToRecipeDTO(Recipe recipe) {
         return RecipeDTO
                 .builder()
+                .id(recipe.getId())
                 .name(recipe.getName())
                 .category(recipe.getCategory().name())
                 .build();
