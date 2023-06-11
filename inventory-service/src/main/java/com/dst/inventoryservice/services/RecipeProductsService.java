@@ -26,6 +26,11 @@ public class RecipeProductsService {
 
     public Long addRecipeProducts(Long recipeId, RecipeProductsDTO productsDTO) {
 
+        /*
+        TODO: Need to make a check, if there is duplicated products with different quantities
+        TODO: to sum their quantities and then and after that to save the entity to the DB
+         */
+
         List<Long> productsById = productsDTO.products().stream().map(RecipeProductDTO::productId).toList();
 
         // In case of missing products, throw exception

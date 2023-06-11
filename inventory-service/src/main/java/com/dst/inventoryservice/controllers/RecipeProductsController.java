@@ -28,6 +28,5 @@ public class RecipeProductsController {
         }
 
         return ResponseEntity.created(uriComponentsBuilder.path("/api/v1/recipes/{id}").build(recipeIdResponse)).build();
-
     }
 }
