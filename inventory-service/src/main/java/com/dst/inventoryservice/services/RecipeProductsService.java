@@ -13,8 +13,8 @@ import com.dst.inventoryservice.repositories.RecipeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -26,12 +26,21 @@ public class RecipeProductsService {
 
     public Long addRecipeProducts(Long recipeId, RecipeProductsDTO productsDTO) {
 
-        /*
-        TODO: Need to make a check, if there is duplicated products with different quantities
-        TODO: to sum their quantities and then and after that to save the entity to the DB
-         */
+        Map<Long, RecipeProductDTO> products = new HashMap<>();
 
-        List<Long> productsById = productsDTO.products().stream().map(RecipeProductDTO::productId).toList();
+        productsDTO.products().forEach(p -> {
+            if (products.containsKey(p.productId())) {
+                products.put(p.productId(), RecipeProductDTO.builder()
+                        .productId(p.productId())
+                        .quantity(products.get(p.productId()).quantity() + p.quantity())
+                        .build());
+            } else {
+                products.put(p.productId(),
+                        RecipeProductDTO.builder().productId(p.productId()).quantity(p.quantity()).build());
+            }
+        });
+
+        Set<Long> productsById = productsDTO.products().stream().map(RecipeProductDTO::productId).collect(Collectors.toSet());
 
         // In case of missing products, throw exception
         if (productsById.size() != productsDTO.products().size()) {
