@@ -43,9 +43,10 @@ public class RecipeProductsService {
         Set<Long> productsById = productsDTO.products().stream().map(RecipeProductDTO::productId).collect(Collectors.toSet());
 
         // In case of missing products, throw exception
-        if (productsById.size() != productsDTO.products().size()) {
+         
+        /*if (productsById.size() != productsDTO.products().size()) {
             throw new ProductNotFoundException("To be refactored!");
-        }
+        }*/
 
         Optional<Recipe> recipe = this.recipeRepository.findById(recipeId);
 
