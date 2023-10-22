@@ -13,3 +13,11 @@ spring:
   sql:
     init:
       mode: never
+  profiles:
+    main:
+      logging:
+        file: /opt/tomcat/webapps/inventory-service-1.0-SNAPSHOT/application.log
+        level:
+          root: INFO
+server:
+  port: 3000

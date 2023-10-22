@@ -40,11 +40,7 @@ public class ProductService {
         return this.productRepository.findById(id).map(this::mapToProductDTO);
     }
 
-    public Optional<List<ProductDTO>> getAll() {
-        if (this.productRepository.count() == 0) {
-            return Optional.empty();
-        }
-
+    public Optional<List<ProductDTO>> getAllProducts() {
         return Optional.of(this.productRepository.findAll().stream().map(this::mapToProductDTO).toList());
     }
 

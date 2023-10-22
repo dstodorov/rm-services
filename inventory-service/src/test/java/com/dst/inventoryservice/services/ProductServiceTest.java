@@ -168,7 +168,7 @@ class ProductServiceTest {
         when(productRepository.findAll()).thenReturn(Arrays.asList(steakProduct, bananaProduct));
 
         // Act
-        Optional<List<ProductDTO>> result = productService.getAll();
+        Optional<List<ProductDTO>> result = productService.getAllProducts();
 
         // Assert
         Assertions.assertTrue(result.isPresent());
@@ -193,7 +193,7 @@ class ProductServiceTest {
         when(productRepository.count()).thenReturn(0L);
 
         // Act
-        Optional<List<ProductDTO>> result = productService.getAll();
+        Optional<List<ProductDTO>> result = productService.getAllProducts();
 
         // Assert
         Assertions.assertTrue(result.isEmpty());

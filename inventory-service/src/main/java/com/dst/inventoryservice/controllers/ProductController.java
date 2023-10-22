@@ -1,6 +1,5 @@
 package com.dst.inventoryservice.controllers;
 
-import com.dst.inventoryservice.exceptions.DuplicatedProductException;
 import com.dst.inventoryservice.models.dtos.ProductDTO;
 import com.dst.inventoryservice.services.ProductService;
 import jakarta.validation.Valid;
@@ -22,9 +21,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        Optional<List<ProductDTO>> allProducts = this.productService.getAll();
-
-        return allProducts.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return this.productService.getAllProducts().map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping("/{id}")
